@@ -15,18 +15,42 @@ import { footerLinks } from './config/footerConfig'
 
 const Menu = (props) => {
   const { isDark, toggleTheme } = useTheme()
-  const cakePriceUsd = usePriceCakeBusd()
+  const draftCakePriceUsd = usePriceCakeBusd();
+  const cakePriceUsd = draftCakePriceUsd.toNumber();
   const { currentLanguage, setLanguage, t } = useTranslation()
   const { pathname } = useRouter()
   const [showPhishingWarningBanner] = usePhishingBannerManager()
 
   const activeMenuItem = getActiveMenuItem({ menuConfig: config(t), pathname })
   const activeSubMenuItem = getActiveSubMenuItem({ menuItem: activeMenuItem, pathname })
+  const styles = {
+    logoTitle: {
+      display: 'flex',
+      alignItems: 'center'
+    },
+    logoFont: {
+      fontWeight: '900',
+      fontSize: '20px'
+    },
+    flex: {
+      display: 'flex'
+    }
+  }
 
   return (
     <UikitMenu
       linkComponent={(linkProps) => {
-        return <NextLinkFromReactRouter to={linkProps.href} {...linkProps} prefetch={false} />
+        return linkProps.href === "/" ? <a href="/" style={styles.logoTitle} ><div style={styles.flex}><img
+        src="https://bafybeia5iird2icxv6cszha72jrd2qktkuvpzyseaw3cc3mwbpjvvoixqi.ipfs.infura-ipfs.io/"
+        alt="gg"
+        style={{
+          width: '2.5rem',
+          height: 'auto',
+          borderRadius: '50%',          
+          background: 'primary',
+        }}
+      /><div style={styles.logoFont}>PancakeSwap</div></div></a>
+        : <NextLinkFromReactRouter to={linkProps.href} {...linkProps} prefetch={false} />
       }}
       userMenu={<UserMenu />}
       globalMenu={<GlobalSettings />}
@@ -36,7 +60,7 @@ const Menu = (props) => {
       currentLang={currentLanguage.code}
       langs={languageList}
       setLang={setLanguage}
-      cakePriceUsd={cakePriceUsd.toNumber()}
+      cakePriceUsd={cakePriceUsd}
       links={config(t)}
       subLinks={activeMenuItem?.hideSubNav ? [] : activeMenuItem?.items}
       footerLinks={footerLinks(t)}
