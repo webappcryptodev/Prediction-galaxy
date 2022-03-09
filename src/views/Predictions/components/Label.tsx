@@ -129,9 +129,10 @@ export const PricePairLabel: React.FC = () => {
   const priceAsNumber = parseFloat(formatBigNumberToFixed(price, 3, 8))
   const galaxyPriceUsd = useGalaxyBusdPrice()
   const galaxyPriceUsdDisplay = galaxyPriceUsd ? `$${galaxyPriceUsd.toFixed(3)}` : '...'
+  // const galaxyPriceAsNumber = parseFloat(formatBigNumberToFixed())
   const { countUp, update } = useCountUp({
     start: 0,
-    end: galaxyPriceUsdDisplay,
+    end: Number(galaxyPriceUsdDisplay),
     duration: 1,
     decimals: 9,
   })
