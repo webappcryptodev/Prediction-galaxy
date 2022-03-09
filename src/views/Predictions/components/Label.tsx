@@ -140,7 +140,7 @@ export const PricePairLabel: React.FC = () => {
   const updateRef = useRef(update)
 
   useEffect(() => {
-    updateRef.current(galaxyPriceUsdDisplay)
+    updateRef.current(Number(galaxyPriceUsdDisplay))
   }, [priceAsNumber, updateRef])
 
   return (
