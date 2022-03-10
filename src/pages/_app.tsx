@@ -11,7 +11,7 @@ import useSentryUser from 'hooks/useSentryUser'
 import useUserAgent from 'hooks/useUserAgent'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
-import React, { Fragment } from 'react'
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { PersistGate } from 'redux-persist/integration/react'
 import { useStore, persistor } from 'state'
 import { usePollBlockNumber } from 'state/block/hooks'
@@ -110,17 +110,44 @@ type AppPropsWithLayout = AppProps & {
 
 const ProductionErrorBoundary = process.env.NODE_ENV === 'production' ? ErrorBoundary : Fragment
 
+
 const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   // Use the layout defined at the page level, if available
   const Layout = Component.Layout || Fragment
-  // NOTE: Main layout component
+  const [logoState, setLogoState] = useState(true)
+  const handleScroll = () => {
+    console.log('window.scrollY========',window.scrollY)
+    if(window.screenY>65) {
+      console.log('window.scrollY>65',window.scrollY)
+      setLogoState(false)
+    } else {
+      setLogoState(true)
+    }
+  }
+
+  useEffect(() => {
+    console.log('window.scrollY',window.scrollY)
+  }, [handleScroll, logoState])
+
+  document.addEventListener('scroll',handleScroll)
+ // NOTE: Main layout component
   // This is the main layout component that wraps the entire page
+
   return (
     <ProductionErrorBoundary>
-      <Menu>
+      <div id='galaxyLogo' style={{backgroundColor:'rgb(31 199 212)',width: '1.6rem', height: '1.6rem',position:`${logoState?'fixed':'absolute'}`,borderRadius: '100%',right:'23.8%', marginTop: '-41px', zIndex: '555', display: 'flex', alignItems: 'center'}}>
+        <img src="https://bafybeia5iird2icxv6cszha72jrd2qktkuvpzyseaw3cc3mwbpjvvoixqi.ipfs.infura-ipfs.io/" style={{width:'2rem',borderRadius:'100%'}} alt='logo1'/>
+        </div>
+      <Menu>        
         <Layout>
-          <Component {...pageProps} />
+          <Component {...pageProps} />          
         </Layout>
+        <div style={{backgroundColor:'#27262c',width: '2rem',height:'3rem',position:'absolute',left:'5.5%',display: 'flex' , marginTop:'45px', alignItems: 'center'}}>
+        <img src="https://bafybeia5iird2icxv6cszha72jrd2qktkuvpzyseaw3cc3mwbpjvvoixqi.ipfs.infura-ipfs.io/" style={{width:'2rem'}} alt='logo2'/>
+        </div>
+        <div style={{backgroundColor:'#27262c',width: '2.3rem', height: '2rem',position:'absolute',right:'20%',bottom:'39px', display: 'flex', alignItems: 'center',borderRadius: '100%', zIndex:'555'}}>
+        <img src="https://bafybeia5iird2icxv6cszha72jrd2qktkuvpzyseaw3cc3mwbpjvvoixqi.ipfs.infura-ipfs.io/" style={{width:'2rem'}} alt='logo3'/>
+        </div>
       </Menu>
       <ToastListener />
       {

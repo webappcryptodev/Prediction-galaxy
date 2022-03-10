@@ -7,9 +7,9 @@ const MyCustomTokenIcon = () => {
   return (
     <Box
       style={{
-        width: '1.5rem',
-        height: '1.5rem',
-        borderRadius: '50%',
+        width: '1.6rem',
+        height: '1.6rem',
+        borderRadius: '100%',
         background: 'primary',
         color: 'white',
         // display: 'flex',
@@ -22,8 +22,8 @@ const MyCustomTokenIcon = () => {
         alt="gg"
         style={{
           width: '64px',
-          height: '64px',
-          borderRadius: '50%',
+          height: 'auto',
+          borderRadius: '100%',
           background: 'primary',
           color: 'white',
           display: 'flex',
@@ -55,8 +55,6 @@ const StyledPrevNextNav = styled(Flex)`
 const Icon = styled.div`
   cursor: pointer;
   left: 50%;
-  margin-left: -32px;
-  position: absolute;
 `
 
 const PrevNextNav = () => {

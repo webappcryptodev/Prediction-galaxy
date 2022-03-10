@@ -30,6 +30,14 @@ export const mainnetTokens = defineTokens({
     'PancakeSwap Token',
     'https://pancakeswap.finance/',
   ),
+  galaxy: new Token(
+    MAINNET,
+    '0xcAf23964Ca8db16D816eB314a56789F58fE0e10e',
+    9,
+    'GalaxyGoggle',
+    'GalaxyGoggle Token',
+    'https://galaxygoggle.money/'    
+  ),
   tlos: new Token(MAINNET, '0xb6C53431608E626AC81a9776ac3e999c5556717c', 18, 'TLOS', 'Telos', 'https://www.telos.net/'),
   beta: new Token(
     MAINNET,

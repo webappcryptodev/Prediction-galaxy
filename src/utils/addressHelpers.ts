@@ -61,6 +61,9 @@ export const getIfoPoolAddress = () => {
 export const getPredictionsAddress = () => {
   return getAddress(addresses.predictions)
 }
+// export const getChainlinkOracleAddress = () => {
+//   return getAddress(addresses.chainlinkOracle)
+// }
 export const getChainlinkOracleAddress = () => {
   return getAddress(addresses.chainlinkOracle)
 }

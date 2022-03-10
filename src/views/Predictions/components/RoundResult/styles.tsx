@@ -35,7 +35,7 @@ export const PrizePoolRow: React.FC<PrizePoolRowProps> = ({ totalAmount, ...prop
   return (
     <Row {...props}>
       <Text bold>{t('Prize Pool')}:</Text>
-      <Text bold>{`${getPrizePoolAmount(totalAmount)} BNB`}</Text>
+      <Text bold>{`${getPrizePoolAmount(totalAmount)} GG`}</Text>
     </Row>
   )
 }
@@ -61,7 +61,7 @@ export const PayoutRow: React.FC<PayoutRowProps> = ({ positionLabel, multiplier,
           {t('%multiplier% Payout', { multiplier: formattedMultiplier })}
         </Text>
         <Text mx="4px">|</Text>
-        <Text fontSize="12px" lineHeight="18px">{`${formatBnb(amount)} BNB`}</Text>
+        <Text fontSize="12px" lineHeight="18px">{`${formatBnb(amount)} GG`}</Text>
       </Flex>
     </Row>
   )
@@ -201,7 +201,7 @@ export const PrizePoolHistoryRow: React.FC<PrizePoolHistoryRowProps> = ({ totalA
   return (
     <Row {...props}>
       <Text bold>{t('Prize Pool')}:</Text>
-      <Text bold>{`${getPrizePoolAmountHistory(totalAmount)} BNB`}</Text>
+      <Text bold>{`${getPrizePoolAmountHistory(totalAmount)} GG`}</Text>
     </Row>
   )
 }
@@ -216,7 +216,7 @@ export const LockPriceHistoryRow: React.FC<LockPriceHistoryRowProps> = ({ lockPr
   return (
     <Row {...props}>
       <Text fontSize="14px">{t('Locked Price')}:</Text>
-      <Text fontSize="14px">{formatUsd(lockPrice)}</Text>
+      <Text fontSize="14px">{formatUsd(lockPrice/19.9702)}</Text>
     </Row>
   )
 }

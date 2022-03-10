@@ -7,7 +7,7 @@ import { getRoundResult, Result } from 'state/predictions/helpers'
 import { REWARD_RATE } from 'state/predictions/config'
 import { getBscScanLink } from 'utils'
 import { multiplyPriceByAmount } from 'utils/prices'
-import { useBNBBusdPrice } from 'hooks/useBUSDPrice'
+import { useBNBBusdPrice, useGGBusdPrice } from 'hooks/useBUSDPrice'
 import { useGetCurrentEpoch } from 'state/predictions/hooks'
 import { Bet, BetPosition } from 'state/types'
 import { formatBnb, getMultiplier, getNetPayout } from '../helpers'
@@ -106,7 +106,7 @@ const PnlTab: React.FC<PnlTabProps> = ({ hasBetHistory, bets }) => {
   const { account } = useWeb3React()
   const currentEpoch = useGetCurrentEpoch()
   const bnbBusdPrice = useBNBBusdPrice()
-
+  const ggBusdPrice = useGGBusdPrice()
   const summary = getPnlSummary(bets, currentEpoch)
 
   const netResultAmount = summary.won.payout - summary.lost.amount
@@ -118,10 +118,10 @@ const PnlTab: React.FC<PnlTabProps> = ({ hasBetHistory, bets }) => {
   // Guard in case user has only lost rounds
   const hasBestRound = summary.won.bestRound.payout !== 0
 
-  const netResultInUsd = multiplyPriceByAmount(bnbBusdPrice, netResultAmount)
-  const avgBnbWonInUsd = multiplyPriceByAmount(bnbBusdPrice, avgBnbWonPerRound)
-  const betRoundInUsd = multiplyPriceByAmount(bnbBusdPrice, summary.won.bestRound.payout)
-  const avgPositionEnteredInUsd = multiplyPriceByAmount(bnbBusdPrice, avgPositionEntered)
+  const netResultInUsd = multiplyPriceByAmount(ggBusdPrice, netResultAmount)
+  const avgBnbWonInUsd = multiplyPriceByAmount(ggBusdPrice, avgBnbWonPerRound)
+  const betRoundInUsd = multiplyPriceByAmount(ggBusdPrice, summary.won.bestRound.payout)
+  const avgPositionEnteredInUsd = multiplyPriceByAmount(ggBusdPrice, avgPositionEntered)
 
   return hasBetHistory ? (
     <Box p="16px">
@@ -135,7 +135,7 @@ const PnlTab: React.FC<PnlTabProps> = ({ hasBetHistory, bets }) => {
             {t('Net results')}
           </Text>
           <Text bold fontSize="24px" lineHeight="1" color={netResultIsPositive ? 'success' : 'failure'}>
-            {`${netResultIsPositive ? '+' : ''}${formatBnb(netResultAmount)} BNB`}
+            {`${netResultIsPositive ? '+' : ''}${formatBnb(netResultAmount)} GG`}
           </Text>
           <Text small color="textSubtle">
             {`~$${netResultInUsd.toFixed(2)}`}
@@ -147,7 +147,7 @@ const PnlTab: React.FC<PnlTabProps> = ({ hasBetHistory, bets }) => {
           {t('Average return / round')}
         </Text>
         <Text bold color={avgBnbWonIsPositive ? 'success' : 'failure'}>
-          {`${avgBnbWonIsPositive ? '+' : ''}${formatBnb(avgBnbWonPerRound)} BNB`}
+          {`${avgBnbWonIsPositive ? '+' : ''}${formatBnb(avgBnbWonPerRound)} GG`}
         </Text>
         <Text small color="textSubtle">
           {`~$${avgBnbWonInUsd.toFixed(2)}`}
@@ -159,7 +159,7 @@ const PnlTab: React.FC<PnlTabProps> = ({ hasBetHistory, bets }) => {
               {t('Best round: #%roundId%', { roundId: summary.won.bestRound.id })}
             </Text>
             <Flex alignItems="flex-end">
-              <Text bold color="success">{`+${formatBnb(summary.won.bestRound.payout)} BNB`}</Text>
+              <Text bold color="success">{`+${formatBnb(summary.won.bestRound.payout)} GG`}</Text>
               <Text ml="4px" small color="textSubtle">
                 ({summary.won.bestRound.multiplier.toFixed(2)}x)
               </Text>
@@ -173,7 +173,7 @@ const PnlTab: React.FC<PnlTabProps> = ({ hasBetHistory, bets }) => {
         <Text mt="16px" bold color="textSubtle">
           {t('Average position entered / round')}
         </Text>
-        <Text bold>{`${formatBnb(avgPositionEntered)} BNB`}</Text>
+        <Text bold>{`${formatBnb(avgPositionEntered)} GG`}</Text>
         <Text small color="textSubtle">
           {`~$${avgPositionEnteredInUsd.toFixed(2)}`}
         </Text>

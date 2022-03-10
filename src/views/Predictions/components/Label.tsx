@@ -8,13 +8,15 @@ import { useGetCurrentRoundLockTimestamp, useGetLastOraclePrice } from 'state/pr
 import { useTranslation } from 'contexts/Localization'
 import { formatRoundTime } from '../helpers'
 import useCountdown from '../hooks/useCountdown'
+import { useGalaxyBusdPrice } from 'hooks/useBUSDPrice'
+import { usePriceCakeBusd } from 'state/farms/hooks'
 
 const MyCustomTokenIcon = () => {
   return (
     <Box
       style={{
         width: '1.5rem',
-        height: '1.5rem',
+        height: 'auto',
         borderRadius: '50%',
         background: 'primary',
         color: 'white',
@@ -28,7 +30,7 @@ const MyCustomTokenIcon = () => {
         alt="gg"
         style={{
           width: '2.5rem',
-          height: '2.5rem',
+          height: 'auto',
           borderRadius: '50%',
           background: 'primary',
           color: 'white',
@@ -44,7 +46,8 @@ const MyCustomTokenIcon = () => {
 }
 
 const Token = styled(Box)`
-  margin-top: -24px;
+  margin-top: -8px;
+  margin-left: 35px;
   position: absolute;
   top: 50%;
   z-index: 30;
@@ -55,11 +58,11 @@ const Token = styled(Box)`
   }
 
   ${({ theme }) => theme.mediaQueries.lg} {
-    margin-top: -32px;
+    margin-top: -8px;
 
     & > svg {
       height: 64px;
-      width: 64px;
+      width: 'auto';
     }
   }
 `
@@ -125,17 +128,21 @@ const Label = styled(Flex)<{ dir: 'left' | 'right' }>`
 export const PricePairLabel: React.FC = () => {
   const price = useGetLastOraclePrice()
   const priceAsNumber = parseFloat(formatBigNumberToFixed(price, 3, 8))
+  const draftCakePriceUsd = usePriceCakeBusd();
+  const cakePriceUsd = Number((priceAsNumber / 16.9702).toFixed(3));
+  const galaxyPriceUsd = Number((priceAsNumber / 19).toFixed(0));
+  // const galaxyPriceUsdDisplay = galaxyPriceUsd ? `$${galaxyPriceUsd.toFixed(3)}` : '...'
   const { countUp, update } = useCountUp({
     start: 0,
-    end: priceAsNumber,
+    end: cakePriceUsd,
     duration: 1,
-    decimals: 3,
+    decimals: 9,
   })
 
   const updateRef = useRef(update)
 
   useEffect(() => {
-    updateRef.current(priceAsNumber)
+    updateRef.current(cakePriceUsd)
   }, [priceAsNumber, updateRef])
 
   return (
@@ -145,9 +152,9 @@ export const PricePairLabel: React.FC = () => {
       </Token>
       <Label dir="left">
         <Title bold textTransform="uppercase">
-          BNBUSDT
+          GGUSDT
         </Title>
-        <Price fontSize="12px">{`$${countUp}`}</Price>
+        <Price fontSize="12px">{`$${Number(countUp).toFixed(3)}`}</Price>
       </Label>
     </Box>
   )

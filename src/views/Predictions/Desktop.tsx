@@ -183,7 +183,7 @@ const Desktop: React.FC = () => {
             {status === PredictionStatus.LIVE && <Positions />}
           </PositionPane>
           <Gutter ref={gutterRef}>
-            <TradingViewLabel justifyContent="flex-end" symbol="BNBUSDT" />
+            <TradingViewLabel justifyContent="flex-end" symbol="GGUSDT" />
           </Gutter>
           <ChartPane ref={chartRef}>
             <TradingView />
