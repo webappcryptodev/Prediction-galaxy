@@ -102,3 +102,8 @@ export const useBNBBusdPrice = (): Price | undefined => {
   const bnbBusdPrice = useBUSDPrice(tokens.wbnb)
   return bnbBusdPrice
 }
+
+export const useGGBusdPrice = () : Price | undefined => {
+  const ggBusdPrice = useBUSDPrice(tokens.galaxy)
+  return ggBusdPrice
+}

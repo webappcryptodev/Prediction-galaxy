@@ -129,7 +129,7 @@ export const PricePairLabel: React.FC = () => {
   const price = useGetLastOraclePrice()
   const priceAsNumber = parseFloat(formatBigNumberToFixed(price, 3, 8))
   const draftCakePriceUsd = usePriceCakeBusd();
-  const cakePriceUsd = Number((draftCakePriceUsd.toNumber() * 3.18).toFixed(3));
+  const cakePriceUsd = Number((priceAsNumber / 16.9702).toFixed(3));
   const galaxyPriceUsd = Number((priceAsNumber / 19).toFixed(0));
   // const galaxyPriceUsdDisplay = galaxyPriceUsd ? `$${galaxyPriceUsd.toFixed(3)}` : '...'
   const { countUp, update } = useCountUp({

@@ -7,6 +7,8 @@ import PhishingWarningBanner from 'components/PhishingWarningBanner'
 import useTheme from 'hooks/useTheme'
 import { usePriceCakeBusd } from 'state/farms/hooks'
 import { usePhishingBannerManager } from 'state/user/hooks'
+import { formatBigNumberToFixed } from 'utils/formatBalance'
+import { useGetLastOraclePrice } from 'state/predictions/hooks'
 import config from './config/config'
 import UserMenu from './UserMenu'
 import GlobalSettings from './GlobalSettings'
@@ -15,14 +17,20 @@ import { footerLinks } from './config/footerConfig'
 
 const Menu = (props) => {
   const { isDark, toggleTheme } = useTheme()
-  const draftCakePriceUsd = usePriceCakeBusd();
-  const cakePriceUsd = draftCakePriceUsd.toNumber();
+  const price = useGetLastOraclePrice()
+  const priceAsNumber = parseFloat(formatBigNumberToFixed(price, 3, 8))  
+  const cakePriceUsd = Number((priceAsNumber / 16.9702).toFixed(3));
+  // const draftCakePriceUsd = usePriceCakeBusd();
+  // const cakePriceUsd = draftCakePriceUsd.toNumber() * 3.18;
   const { currentLanguage, setLanguage, t } = useTranslation()
   const { pathname } = useRouter()
   const [showPhishingWarningBanner] = usePhishingBannerManager()
 
   const activeMenuItem = getActiveMenuItem({ menuConfig: config(t), pathname })
   const activeSubMenuItem = getActiveSubMenuItem({ menuItem: activeMenuItem, pathname })
+
+  console.log('uikitMenuActiveMenuItem props==>',props)
+  console.log('uikitactiveSubMenuItem==>',activeSubMenuItem)
   const styles = {
     logoTitle: {
       display: 'flex',
@@ -62,7 +70,6 @@ const Menu = (props) => {
       setLang={setLanguage}
       cakePriceUsd={cakePriceUsd}
       links={config(t)}
-      subLinks={activeMenuItem?.hideSubNav ? [] : activeMenuItem?.items}
       footerLinks={footerLinks(t)}
       activeItem={activeMenuItem?.href}
       activeSubItem={activeSubMenuItem?.href}
