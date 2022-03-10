@@ -7,8 +7,6 @@ import PhishingWarningBanner from 'components/PhishingWarningBanner'
 import useTheme from 'hooks/useTheme'
 import { usePriceCakeBusd } from 'state/farms/hooks'
 import { usePhishingBannerManager } from 'state/user/hooks'
-import { formatBigNumberToFixed } from 'utils/formatBalance'
-import { useGetLastOraclePrice } from 'state/predictions/hooks'
 import config from './config/config'
 import UserMenu from './UserMenu'
 import GlobalSettings from './GlobalSettings'
@@ -17,11 +15,7 @@ import { footerLinks } from './config/footerConfig'
 
 const Menu = (props) => {
   const { isDark, toggleTheme } = useTheme()
-  const price = useGetLastOraclePrice()
-  const priceAsNumber = parseFloat(formatBigNumberToFixed(price, 3, 8))  
-  const cakePriceUsd = Number((priceAsNumber / 16.9702).toFixed(3));
-  // const draftCakePriceUsd = usePriceCakeBusd();
-  // const cakePriceUsd = draftCakePriceUsd.toNumber() * 3.18;
+  const cakePriceUsd = usePriceCakeBusd()
   const { currentLanguage, setLanguage, t } = useTranslation()
   const { pathname } = useRouter()
   const [showPhishingWarningBanner] = usePhishingBannerManager()
@@ -29,36 +23,10 @@ const Menu = (props) => {
   const activeMenuItem = getActiveMenuItem({ menuConfig: config(t), pathname })
   const activeSubMenuItem = getActiveSubMenuItem({ menuItem: activeMenuItem, pathname })
 
-  console.log('uikitMenuActiveMenuItem props==>',props)
-  console.log('uikitactiveSubMenuItem==>',activeSubMenuItem)
-  const styles = {
-    logoTitle: {
-      display: 'flex',
-      alignItems: 'center'
-    },
-    logoFont: {
-      fontWeight: '900',
-      fontSize: '20px'
-    },
-    flex: {
-      display: 'flex'
-    }
-  }
-
   return (
     <UikitMenu
       linkComponent={(linkProps) => {
-        return linkProps.href === "/" ? <a href="/" style={styles.logoTitle} ><div style={styles.flex}><img
-        src="https://bafybeia5iird2icxv6cszha72jrd2qktkuvpzyseaw3cc3mwbpjvvoixqi.ipfs.infura-ipfs.io/"
-        alt="gg"
-        style={{
-          width: '2.5rem',
-          height: 'auto',
-          borderRadius: '50%',          
-          background: 'primary',
-        }}
-      /><div style={styles.logoFont}>PancakeSwap</div></div></a>
-        : <NextLinkFromReactRouter to={linkProps.href} {...linkProps} prefetch={false} />
+        return <NextLinkFromReactRouter to={linkProps.href} {...linkProps} prefetch={false} />
       }}
       userMenu={<UserMenu />}
       globalMenu={<GlobalSettings />}
@@ -68,8 +36,9 @@ const Menu = (props) => {
       currentLang={currentLanguage.code}
       langs={languageList}
       setLang={setLanguage}
-      cakePriceUsd={cakePriceUsd}
+      cakePriceUsd={cakePriceUsd.toNumber()}
       links={config(t)}
+      subLinks={activeMenuItem?.hideSubNav ? [] : activeMenuItem?.items}
       footerLinks={footerLinks(t)}
       activeItem={activeMenuItem?.href}
       activeSubItem={activeSubMenuItem?.href}

@@ -43,21 +43,20 @@ const LiveRoundCard: React.FC<LiveRoundCardProps> = ({
   const { t } = useTranslation()
   const { lockPrice, totalAmount, lockTimestamp, closeTimestamp } = round
   const price = useGetLastOraclePrice()
-  const priceAsNumber = parseFloat(formatBigNumberToFixed(price, 3, 8))
-  const cakePriceUsd = Number((priceAsNumber / 16.9702).toFixed(3));
   const bufferSeconds = useGetBufferSeconds()
 
   const isBull = lockPrice && price.gt(lockPrice)
   const priceColor = isBull ? 'success' : 'failure'
 
   const priceDifference = getPriceDifference(price, lockPrice)
+  const priceAsNumber = parseFloat(formatBigNumberToFixed(price, 3, 8))
   const hasRoundFailed = getHasRoundFailed(round, bufferSeconds)
 
   const now = Date.now()
 
   const { countUp, update } = useCountUp({
     start: 0,
-    end: cakePriceUsd,
+    end: priceAsNumber,
     duration: 1,
     decimals: 3,
   })
@@ -68,7 +67,7 @@ const LiveRoundCard: React.FC<LiveRoundCardProps> = ({
   const updateRef = useRef(update)
 
   useEffect(() => {
-    updateRef.current(cakePriceUsd)
+    updateRef.current(priceAsNumber)
   }, [priceAsNumber, updateRef])
 
   if (hasRoundFailed) {

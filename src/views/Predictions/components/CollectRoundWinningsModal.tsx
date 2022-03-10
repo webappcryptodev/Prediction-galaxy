@@ -22,7 +22,7 @@ import { REWARD_RATE } from 'state/predictions/config'
 import { fetchNodeHistory, markAsCollected } from 'state/predictions'
 import { Bet } from 'state/types'
 import { useTranslation } from 'contexts/Localization'
-import { useBNBBusdPrice, useGGBusdPrice } from 'hooks/useBUSDPrice'
+import { useBNBBusdPrice } from 'hooks/useBUSDPrice'
 import useToast from 'hooks/useToast'
 import { usePredictionsContract } from 'hooks/useContract'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
@@ -84,16 +84,14 @@ const CollectRoundWinningsModal: React.FC<CollectRoundWinningsModalProps> = ({ o
   const { callWithGasPrice } = useCallWithGasPrice()
   const predictionsContract = usePredictionsContract()
   const bnbBusdPrice = useBNBBusdPrice()
-  const ggBusdPrice = useGGBusdPrice()
   const dispatch = useAppDispatch()
   const isLoadingHistory = useGetIsFetchingHistory()
   const history = useGetHistory()
 
   const { epochs, total } = calculateClaimableRounds(history)
-  const totalBnb = multiplyPriceByAmount(ggBusdPrice, total)
+  const totalBnb = multiplyPriceByAmount(bnbBusdPrice, total)
 
   useEffect(() => {
-    console.log('CollectRoundWinningsModal=>galaxyPrice',ggBusdPrice)
     // Fetch history if they have not opened the history pane yet
     if (history.length === 0) {
       dispatch(fetchNodeHistory({ account }))
@@ -144,7 +142,7 @@ const CollectRoundWinningsModal: React.FC<CollectRoundWinningsModalProps> = ({ o
         <Flex alignItems="start" justifyContent="space-between" mb="8px">
           <Text>{t('Collecting')}</Text>
           <Box style={{ textAlign: 'right' }}>
-            <Text>{`${formatNumber(total, 0, 4)} GG`}</Text>
+            <Text>{`${formatNumber(total, 0, 4)} BNB`}</Text>
             <Text fontSize="12px" color="textSubtle">
               {`~$${totalBnb.toFixed(2)}`}
             </Text>

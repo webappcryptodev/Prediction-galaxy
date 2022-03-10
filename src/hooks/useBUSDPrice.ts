@@ -75,11 +75,6 @@ export const useCakeBusdPrice = (): Price | undefined => {
   return cakeBusdPrice
 }
 
-export const useGalaxyBusdPrice = (): Price | undefined => {
-  const cakeBusdPrice = useBUSDPrice(tokens.galaxy)
-  return cakeBusdPrice
-}
-
 export const useBUSDCurrencyAmount = (currency: Currency, amount: number): number | undefined => {
   const { chainId } = useActiveWeb3React()
   const busdPrice = useBUSDPrice(currency)
@@ -101,9 +96,4 @@ export const useBUSDCakeAmount = (amount: number): number | undefined => {
 export const useBNBBusdPrice = (): Price | undefined => {
   const bnbBusdPrice = useBUSDPrice(tokens.wbnb)
   return bnbBusdPrice
-}
-
-export const useGGBusdPrice = () : Price | undefined => {
-  const ggBusdPrice = useBUSDPrice(tokens.galaxy)
-  return ggBusdPrice
 }

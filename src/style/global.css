@@ -13745,14 +13745,3 @@ textarea.form-control-lg {
 }
 
 /*# sourceMappingURL=global.css.map */
-
-.flex_prediction_logo {
-  display: flex;
-  align-items: center !important;  
-}
-
-.pancakeswap_title, .logofont {
-  font-weight: 900;
-  font-size: 20px;
-  display: flex;
-}
