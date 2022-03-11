@@ -103,7 +103,7 @@ export const useBNBBusdPrice = (): Price | undefined => {
   return bnbBusdPrice
 }
 
-export const useGGBusdPrice = () : Price | undefined => {
-  const ggBusdPrice = useBUSDPrice(tokens.galaxy)
-  return ggBusdPrice
+export const useGGBusdPrice = (): Price | undefined => {
+  const cakeBusdPrice = useBUSDPrice(tokens.galaxy)
+  return cakeBusdPrice
 }

@@ -9,7 +9,7 @@ import { Bet, BetPosition } from 'state/types'
 import { fetchLedgerData, markAsCollected } from 'state/predictions'
 import { Result } from 'state/predictions/helpers'
 import { useGetIsClaimable } from 'state/predictions/hooks'
-import { useBNBBusdPrice, useGGBusdPrice } from 'hooks/useBUSDPrice'
+import { useBNBBusdPrice } from 'hooks/useBUSDPrice'
 import { getBscScanLink } from 'utils'
 import { multiplyPriceByAmount } from 'utils/prices'
 import useIsRefundable from '../../hooks/useIsRefundable'
@@ -41,7 +41,6 @@ const BetResult: React.FC<BetResultProps> = ({ bet, result }) => {
   const { isRefundable } = useIsRefundable(bet.round.epoch)
   const canClaim = useGetIsClaimable(bet.round.epoch)
   const bnbBusdPrice = useBNBBusdPrice()
-  const ggBusdPrice = useGGBusdPrice()
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
     <Text as="p">{t('Includes your original position and your winnings, minus the %fee% fee.', { fee: '3%' })}</Text>,
     { placement: 'auto' },
@@ -51,7 +50,7 @@ const BetResult: React.FC<BetResultProps> = ({ bet, result }) => {
 
   // Winners get the payout, otherwise the claim what they put it if it was canceled
   const payout = isWinner ? getNetPayout(bet, REWARD_RATE) : bet.amount
-  const totalPayout = multiplyPriceByAmount(ggBusdPrice, payout)
+  const totalPayout = multiplyPriceByAmount(bnbBusdPrice, payout)
   const returned = payout + bet.amount
 
   const getHeaderColor = () => {

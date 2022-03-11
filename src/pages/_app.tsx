@@ -1,4 +1,4 @@
-import { ResetCSS } from '@pancakeswap/uikit'
+import { ResetCSS, Box } from '@pancakeswap/uikit'
 import Script from 'next/script'
 import BigNumber from 'bignumber.js'
 // import EasterEgg from 'components/EasterEgg'
@@ -110,6 +110,40 @@ type AppPropsWithLayout = AppProps & {
 
 const ProductionErrorBoundary = process.env.NODE_ENV === 'production' ? ErrorBoundary : Fragment
 
+const MyCustomTokenIcon = () => {
+  return (
+    <Box
+      style={{
+        width: '1.5rem',
+        height: 'auto',
+        borderRadius: '50%',
+        background: 'primary',
+        color: 'white',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <img
+        src="https://bafybeia5iird2icxv6cszha72jrd2qktkuvpzyseaw3cc3mwbpjvvoixqi.ipfs.infura-ipfs.io/"
+        alt="gg"
+        style={{
+          width: '2.5rem',
+          height: 'auto',
+          borderRadius: '50%',
+          background: 'primary',
+          color: 'white',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          // Rotate it slightly
+          transform: 'rotate(-10deg)',
+        }}
+      />
+    </Box>
+  )
+}
+
 
 const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   // Use the layout defined at the page level, if available
@@ -124,20 +158,31 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
       setLogoState(true)
     }
   }
-
-  useEffect(() => {
-    console.log('window.scrollY',window.scrollY)
-  }, [handleScroll, logoState])
-
+  
+  const query = document.querySelectorAll('svg')
+  const svgElements = query
+ let queryTimer = setInterval(() => {
+  if(query) {
+    for(let svgIndex = 0; svgIndex<query.length; svgIndex++) {
+      if(query[svgIndex].getAttribute('viewBox')==='0 0 1281 199') {
+        const letter = query[svgIndex].firstChild;
+        query[svgIndex].innerHTML = '';
+        query[svgIndex].appendChild(letter);
+      }
+      if(query[svgIndex].getAttribute('viewBox')==='0 0 96 96') {
+        query[svgIndex].innerHTML = '';        
+        // query[svgIndex].appendChild(`${<MyCustomTokenIcon />}`)
+      }
+    }
+  }
+ },5)
+  
   document.addEventListener('scroll',handleScroll)
  // NOTE: Main layout component
   // This is the main layout component that wraps the entire page
 
   return (
     <ProductionErrorBoundary>
-      <div id='galaxyLogo' style={{backgroundColor:'rgb(31 199 212)',width: '1.6rem', height: '1.6rem',position:`${logoState?'fixed':'absolute'}`,borderRadius: '100%',right:'23.8%', marginTop: '-41px', zIndex: '555', display: 'flex', alignItems: 'center'}}>
-        <img src="https://bafybeia5iird2icxv6cszha72jrd2qktkuvpzyseaw3cc3mwbpjvvoixqi.ipfs.infura-ipfs.io/" style={{width:'2rem',borderRadius:'100%'}} alt='logo1'/>
-        </div>
       <Menu>        
         <Layout>
           <Component {...pageProps} />          

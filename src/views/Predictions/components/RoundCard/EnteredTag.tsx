@@ -2,7 +2,7 @@ import React from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 import { CheckmarkCircleIcon, CheckmarkCircleFillIcon, Tag, useTooltip } from '@pancakeswap/uikit'
 import { useTranslation } from 'contexts/Localization'
-import { formatBnbv2, formatGGv2 } from '../../helpers'
+import { formatBnbv2 } from '../../helpers'
 
 interface EnteredTagProps {
   amount?: BigNumber
@@ -12,7 +12,7 @@ interface EnteredTagProps {
 const EnteredTag: React.FC<EnteredTagProps> = ({ amount, hasClaimed = false }) => {
   const { t } = useTranslation()
   const { targetRef, tooltipVisible, tooltip } = useTooltip(
-    <div style={{ whiteSpace: 'nowrap' }}>{`${formatGGv2(amount)} GG`}</div>,
+    <div style={{ whiteSpace: 'nowrap' }}>{`${formatBnbv2(amount)} GG`}</div>,
     { placement: 'bottom' },
   )
 

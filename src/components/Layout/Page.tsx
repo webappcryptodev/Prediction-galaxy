@@ -28,7 +28,7 @@ export const PageMeta: React.FC<{ symbol?: string }> = ({ symbol }) => {
   const { pathname } = useRouter()
   const cakePriceUsd = useCakeBusdPrice()
   const cakePriceUsdDisplay = cakePriceUsd ? `$${cakePriceUsd.toFixed(3)}` : '...'
-
+  console.log('cakeprice',cakePriceUsdDisplay)
   const pageMeta = getCustomMeta(pathname, t) || {}
   const { title, description, image } = { ...DEFAULT_META, ...pageMeta }
   let pageTitle = cakePriceUsdDisplay ? [title, cakePriceUsdDisplay].join(' - ') : title

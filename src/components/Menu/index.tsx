@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { NextLinkFromReactRouter } from 'components/NextLink'
 import { Menu as UikitMenu } from '@pancakeswap/uikit'
@@ -14,12 +15,16 @@ import UserMenu from './UserMenu'
 import GlobalSettings from './GlobalSettings'
 import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 import { footerLinks } from './config/footerConfig'
+import { useGGBusdPrice } from 'hooks/useBUSDPrice'
+
 
 const Menu = (props) => {
   const { isDark, toggleTheme } = useTheme()
   const price = useGetLastOraclePrice()
   const priceAsNumber = parseFloat(formatBigNumberToFixed(price, 3, 8))  
   const cakePriceUsd = Number((priceAsNumber / 16.9702).toFixed(3));
+  const ggPriceUsd = useGGBusdPrice();
+  const ggPriceUsdDisplay = ggPriceUsd ? Number(ggPriceUsd.toFixed(3)) : 23
   // const draftCakePriceUsd = usePriceCakeBusd();
   // const cakePriceUsd = draftCakePriceUsd.toNumber() * 3.18;
   const { currentLanguage, setLanguage, t } = useTranslation()
@@ -45,6 +50,8 @@ const Menu = (props) => {
     }
   }
 
+
+
   return (
     <UikitMenu
       linkComponent={(linkProps) => {
@@ -68,7 +75,7 @@ const Menu = (props) => {
       currentLang={currentLanguage.code}
       langs={languageList}
       setLang={setLanguage}
-      cakePriceUsd={cakePriceUsd}
+      cakePriceUsd={ggPriceUsdDisplay}
       links={config(t)}
       footerLinks={footerLinks(t)}
       activeItem={activeMenuItem?.href}

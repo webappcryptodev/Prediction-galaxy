@@ -59,7 +59,7 @@ const PhishingWarningBanner: React.FC = () => {
           bold={text === 'https://galaxygoggle.finance'}
           color={text === 'https://galaxygoggle.finance' ? '#FFFFFF' : '#BDC2C4'}
         >
-          {text}
+          {text}          
         </Text>
       ))}
     </>
@@ -68,7 +68,9 @@ const PhishingWarningBanner: React.FC = () => {
     <Container>
       {isMobile || isMd ? (
         <>
-          <Box>{warningTextComponent}</Box>
+          <Box>
+            {warningTextComponent}
+          </Box>
           <IconButton onClick={hideBanner} variant="text">
             <CloseIcon color="#FFFFFF" />
           </IconButton>
@@ -84,6 +86,9 @@ const PhishingWarningBanner: React.FC = () => {
           <IconButton onClick={hideBanner} variant="text">
             <CloseIcon color="#FFFFFF" />
           </IconButton>
+          <div id='galaxyLogo' style={{backgroundColor:'rgb(31 199 212)',width: '1.6rem', height: '1.6rem',position:'absolute',borderRadius: '100%',right:'23.8%', marginTop: '125px', zIndex: '555', display: 'flex', alignItems: 'center'}}>
+            <img src="https://bafybeia5iird2icxv6cszha72jrd2qktkuvpzyseaw3cc3mwbpjvvoixqi.ipfs.infura-ipfs.io/" style={{width:'2rem',borderRadius:'100%'}} alt='logo1'/>
+          </div>
         </>
       )}
     </Container>

@@ -1,15 +1,14 @@
 import React, { useEffect, useRef } from 'react'
 import { useCountUp } from 'react-countup'
 import styled from 'styled-components'
-import { BnbUsdtPairTokenIcon, Box, Flex, PocketWatchIcon, Text } from '@pancakeswap/uikit'
+import { Box, Flex, PocketWatchIcon, Text } from '@pancakeswap/uikit'
 import { ROUND_BUFFER } from 'state/predictions/config'
 import { formatBigNumberToFixed } from 'utils/formatBalance'
 import { useGetCurrentRoundLockTimestamp, useGetLastOraclePrice } from 'state/predictions/hooks'
 import { useTranslation } from 'contexts/Localization'
 import { formatRoundTime } from '../helpers'
 import useCountdown from '../hooks/useCountdown'
-import { useGalaxyBusdPrice } from 'hooks/useBUSDPrice'
-import { usePriceCakeBusd } from 'state/farms/hooks'
+import { useCakeBusdPrice, useGGBusdPrice } from 'hooks/useBUSDPrice'
 
 const MyCustomTokenIcon = () => {
   return (
@@ -128,13 +127,13 @@ const Label = styled(Flex)<{ dir: 'left' | 'right' }>`
 export const PricePairLabel: React.FC = () => {
   const price = useGetLastOraclePrice()
   const priceAsNumber = parseFloat(formatBigNumberToFixed(price, 3, 8))
-  const draftCakePriceUsd = usePriceCakeBusd();
   const cakePriceUsd = Number((priceAsNumber / 16.9702).toFixed(3));
-  const galaxyPriceUsd = Number((priceAsNumber / 19).toFixed(0));
-  // const galaxyPriceUsdDisplay = galaxyPriceUsd ? `$${galaxyPriceUsd.toFixed(3)}` : '...'
+  const ggPriceUsd = useGGBusdPrice();
+  const ggPriceAsNumber = Number(ggPriceUsd.toFixed(3))
+  const ggPriceUsdDisplay = ggPriceUsd ? `$${ggPriceUsd.toFixed(3)}` : '...'
   const { countUp, update } = useCountUp({
     start: 0,
-    end: cakePriceUsd,
+    end: ggPriceAsNumber,
     duration: 1,
     decimals: 9,
   })
@@ -142,7 +141,8 @@ export const PricePairLabel: React.FC = () => {
   const updateRef = useRef(update)
 
   useEffect(() => {
-    updateRef.current(cakePriceUsd)
+    updateRef.current(ggPriceAsNumber)
+    console.log('ggPrice',ggPriceUsdDisplay)
   }, [priceAsNumber, updateRef])
 
   return (

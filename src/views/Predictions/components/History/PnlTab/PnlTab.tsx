@@ -7,7 +7,7 @@ import { getRoundResult, Result } from 'state/predictions/helpers'
 import { REWARD_RATE } from 'state/predictions/config'
 import { getBscScanLink } from 'utils'
 import { multiplyPriceByAmount } from 'utils/prices'
-import { useBNBBusdPrice, useGGBusdPrice } from 'hooks/useBUSDPrice'
+import { useBNBBusdPrice } from 'hooks/useBUSDPrice'
 import { useGetCurrentEpoch } from 'state/predictions/hooks'
 import { Bet, BetPosition } from 'state/types'
 import { formatBnb, getMultiplier, getNetPayout } from '../helpers'
@@ -106,7 +106,6 @@ const PnlTab: React.FC<PnlTabProps> = ({ hasBetHistory, bets }) => {
   const { account } = useWeb3React()
   const currentEpoch = useGetCurrentEpoch()
   const bnbBusdPrice = useBNBBusdPrice()
-  const ggBusdPrice = useGGBusdPrice()
   const summary = getPnlSummary(bets, currentEpoch)
 
   const netResultAmount = summary.won.payout - summary.lost.amount
@@ -118,10 +117,10 @@ const PnlTab: React.FC<PnlTabProps> = ({ hasBetHistory, bets }) => {
   // Guard in case user has only lost rounds
   const hasBestRound = summary.won.bestRound.payout !== 0
 
-  const netResultInUsd = multiplyPriceByAmount(ggBusdPrice, netResultAmount)
-  const avgBnbWonInUsd = multiplyPriceByAmount(ggBusdPrice, avgBnbWonPerRound)
-  const betRoundInUsd = multiplyPriceByAmount(ggBusdPrice, summary.won.bestRound.payout)
-  const avgPositionEnteredInUsd = multiplyPriceByAmount(ggBusdPrice, avgPositionEntered)
+  const netResultInUsd = multiplyPriceByAmount(bnbBusdPrice, netResultAmount)
+  const avgBnbWonInUsd = multiplyPriceByAmount(bnbBusdPrice, avgBnbWonPerRound)
+  const betRoundInUsd = multiplyPriceByAmount(bnbBusdPrice, summary.won.bestRound.payout)
+  const avgPositionEnteredInUsd = multiplyPriceByAmount(bnbBusdPrice, avgPositionEntered)
 
   return hasBetHistory ? (
     <Box p="16px">

@@ -22,7 +22,7 @@ import { useWeb3React } from '@web3-react/core'
 import { useGetMinBetAmount } from 'state/predictions/hooks'
 import { useTranslation } from 'contexts/Localization'
 import { usePredictionsContract } from 'hooks/useContract'
-import { useGetBnbBalance } from 'hooks/useTokenBalance'
+import { useGetBnbBalance, useGetGGBalance } from 'hooks/useTokenBalance'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import useCatchTxError from 'hooks/useCatchTxError'
 import { BetPosition } from 'state/types'
@@ -43,6 +43,40 @@ interface SetPositionCardProps {
 const dust = parseUnits('0.01', 18)
 const percentShortcuts = [10, 25, 50, 75]
 
+const MyCustomTokenIcon = () => {
+  return (
+    <Box
+      style={{
+        width: '1.5rem',
+        height: 'auto',
+        borderRadius: '50%',
+        background: 'primary',
+        color: 'white',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <img
+        src="https://bafybeia5iird2icxv6cszha72jrd2qktkuvpzyseaw3cc3mwbpjvvoixqi.ipfs.infura-ipfs.io/"
+        alt="gg"
+        style={{
+          width: '2.5rem',
+          height: 'auto',
+          borderRadius: '50%',
+          background: 'primary',
+          color: 'white',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          // Rotate it slightly
+          transform: 'rotate(-10deg)',
+        }}
+      />
+    </Box>
+  )
+}
+
 const getButtonProps = (value: BigNumber, bnbBalance: BigNumber, minBetAmountBalance: BigNumber) => {
   const hasSufficientBalance = () => {
     if (value.gt(0)) {
@@ -52,7 +86,7 @@ const getButtonProps = (value: BigNumber, bnbBalance: BigNumber, minBetAmountBal
   }
 
   if (!hasSufficientBalance()) {
-    return { key: 'Insufficient BNB balance', disabled: true }
+    return { key: 'Insufficient GG balance', disabled: true }
   }
 
   if (value.eq(0)) {
@@ -75,6 +109,7 @@ const SetPositionCard: React.FC<SetPositionCardProps> = ({ position, togglePosit
   const { account } = useWeb3React()
   const { swiper } = useSwiper()
   const { balance: bnbBalance } = useGetBnbBalance()
+  const { balance: ggBalance, fetchStatus } = useGetGGBalance()
   const minBetAmount = useGetMinBetAmount()
   const { t } = useTranslation()
   const { fetchWithCatchTxError, loading: isTxPending } = useCatchTxError()
@@ -82,9 +117,9 @@ const SetPositionCard: React.FC<SetPositionCardProps> = ({ position, togglePosit
   const predictionsContract = usePredictionsContract()
 
   const maxBalance = useMemo(() => {
-    return bnbBalance.gt(dust) ? bnbBalance.sub(dust) : dust
-  }, [bnbBalance])
-  const balanceDisplay = formatBigNumber(bnbBalance)
+    return ggBalance.gt(dust) ? ggBalance.sub(dust) : dust
+  }, [ggBalance])
+  const balanceDisplay = formatBigNumber(ggBalance)
 
   const valueAsBn = getValueAsEthersBn(value)
   const showFieldWarning = account && valueAsBn.gt(0) && errorMessage !== null
@@ -158,10 +193,10 @@ const SetPositionCard: React.FC<SetPositionCardProps> = ({ position, togglePosit
     const hasSufficientBalance = inputAmount.gt(0) && inputAmount.lte(maxBalance)
 
     if (!hasSufficientBalance) {
-      setErrorMessage(t('Insufficient BNB balance'))
+      setErrorMessage(t('Insufficient GG balance'))
     } else if (inputAmount.gt(0) && inputAmount.lt(minBetAmount)) {
       setErrorMessage(
-        t('A minimum amount of %num% %token% is required', { num: formatBigNumber(minBetAmount), token: 'BNB' }),
+        t('A minimum amount of %num% %token% is required', { num: formatBigNumber(minBetAmount), token: 'GG' }),
       )
     } else {
       setErrorMessage(null)
@@ -189,9 +224,9 @@ const SetPositionCard: React.FC<SetPositionCardProps> = ({ position, togglePosit
             {t('Commit')}:
           </Text>
           <Flex alignItems="center">
-            <BinanceIcon mr="4px  " />
+           <MyCustomTokenIcon />
             <Text bold textTransform="uppercase">
-              BNB
+              GG
             </Text>
           </Flex>
         </Flex>

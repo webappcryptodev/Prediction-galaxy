@@ -22,6 +22,7 @@ import MultiplierArrow from './MultiplierArrow'
 import CardHeader from './CardHeader'
 import CanceledRoundCard from './CanceledRoundCard'
 import CalculatingCard from './CalculatingCard'
+import { useGGBusdPrice } from 'hooks/useBUSDPrice'
 
 interface LiveRoundCardProps {
   round: NodeRound
@@ -45,6 +46,9 @@ const LiveRoundCard: React.FC<LiveRoundCardProps> = ({
   const price = useGetLastOraclePrice()
   const priceAsNumber = parseFloat(formatBigNumberToFixed(price, 3, 8))
   const cakePriceUsd = Number((priceAsNumber / 16.9702).toFixed(3));
+  const ggPriceUsd = useGGBusdPrice()
+  const ggPriceAsNumber = Number(ggPriceUsd.toFixed(3))
+  const ggPriceUsdDisplay = ggPriceUsd ? `$${ggPriceUsd.toFixed(3)}` : '...'
   const bufferSeconds = useGetBufferSeconds()
 
   const isBull = lockPrice && price.gt(lockPrice)
@@ -57,7 +61,7 @@ const LiveRoundCard: React.FC<LiveRoundCardProps> = ({
 
   const { countUp, update } = useCountUp({
     start: 0,
-    end: cakePriceUsd,
+    end: ggPriceAsNumber,
     duration: 1,
     decimals: 3,
   })
@@ -68,7 +72,7 @@ const LiveRoundCard: React.FC<LiveRoundCardProps> = ({
   const updateRef = useRef(update)
 
   useEffect(() => {
-    updateRef.current(cakePriceUsd)
+    updateRef.current(ggPriceAsNumber)
   }, [priceAsNumber, updateRef])
 
   if (hasRoundFailed) {
