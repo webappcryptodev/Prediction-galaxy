@@ -129,8 +129,7 @@ export const PricePairLabel: React.FC = () => {
   const priceAsNumber = parseFloat(formatBigNumberToFixed(price, 3, 8))
   const cakePriceUsd = Number((priceAsNumber / 16.9702).toFixed(3));
   const ggPriceUsd = useGGBusdPrice();
-  // const ggPriceAsNumber = Number(ggPriceUsd.toFixed(3))
-  const ggPriceAsNumber = 24.42
+  const ggPriceAsNumber = Number(ggPriceUsd.toFixed(3))  
   const ggPriceUsdDisplay = ggPriceUsd ? `$${ggPriceUsd.toFixed(3)}` : '...'
   const { countUp, update } = useCountUp({
     start: 0,
