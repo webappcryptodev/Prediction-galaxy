@@ -13,8 +13,8 @@ interface RoundCardProps {
 }
 
 const RoundCard: React.FC<RoundCardProps> = ({ round }) => {
-  const { epoch, lockPrice, closePrice, totalAmount, bullAmount, bearAmount } = round
-  const currentEpoch = useGetCurrentEpoch()
+  const { epoch, lockPrice, closePrice, totalAmount, bullAmount, bearAmount } = round  
+  const currentEpoch = useGetCurrentEpoch()  
   const { account } = useWeb3React()
   const ledger = useGetBetByEpoch(account, epoch)
   const hasEntered = ledger ? ledger.amount.gt(0) : false
@@ -29,6 +29,9 @@ const RoundCard: React.FC<RoundCardProps> = ({ round }) => {
   const formattedBullMultiplier = bullMultiplier.toUnsafeFloat().toFixed(bullMultiplier.isZero() ? 0 : 2)
   const formattedBearMultiplier = bearMultiplier.toUnsafeFloat().toFixed(bearMultiplier.isZero() ? 0 : 2)
 
+  console.log('RoundCard: React.FC<RoundCardProps>',epoch, lockPrice, closePrice, totalAmount, bullAmount, bearAmount)
+  console.log('RoundCardepoch',epoch,currentEpoch)
+  console.log('RoundCardcloseprice',closePrice)
   // Next (open) round
   if (epoch === currentEpoch && lockPrice === null) {
     return (

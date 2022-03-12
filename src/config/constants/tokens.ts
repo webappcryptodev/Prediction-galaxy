@@ -2052,6 +2052,14 @@ export const testnetTokens = defineTokens({
     'Bakeryswap Token',
     'https://www.bakeryswap.org/',
   ),
+  galaxy: new Token(
+    TESTNET,
+    '0x37507122CE97Ac4Bf5e308483102B30D2A77F05a',
+    9,
+    'GalaxyGoggle',
+    'GalaxyGoggle Token',
+    'https://galaxygoggle.money/'    
+  ),
 } as const)
 
 const tokens = () => {

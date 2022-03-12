@@ -73,6 +73,7 @@ interface LockPriceRowProps extends FlexProps {
 
 export const LockPriceRow: React.FC<LockPriceRowProps> = ({ lockPrice, ...props }) => {
   const { t } = useTranslation()
+  
   console.log('LockPriceRow->lockPrice',formatUsdv2(lockPrice),typeof(formatUsdv2(lockPrice)))
   return (
     <Row {...props}>
