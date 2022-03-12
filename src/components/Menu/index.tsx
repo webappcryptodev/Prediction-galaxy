@@ -6,6 +6,7 @@ import { languageList } from 'config/localization/languages'
 import { useTranslation } from 'contexts/Localization'
 import PhishingWarningBanner from 'components/PhishingWarningBanner'
 import useTheme from 'hooks/useTheme'
+import { useGGBusdPrice } from 'hooks/useBUSDPrice'
 import { usePriceCakeBusd } from 'state/farms/hooks'
 import { usePhishingBannerManager } from 'state/user/hooks'
 import { formatBigNumberToFixed } from 'utils/formatBalance'
@@ -15,7 +16,7 @@ import UserMenu from './UserMenu'
 import GlobalSettings from './GlobalSettings'
 import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 import { footerLinks } from './config/footerConfig'
-import { useGGBusdPrice } from 'hooks/useBUSDPrice'
+
 
 
 const Menu = (props) => {
