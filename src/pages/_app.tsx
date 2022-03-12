@@ -209,9 +209,9 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   }
   
   const query = document.querySelectorAll('svg')
-  let queryCount:number = 0;
+  let queryCount = 0;
   const svgElements = query
- let queryTimer = setInterval(() => {
+ const queryTimer = setInterval(() => {
   if(query) {
     for(let svgIndex = 0; svgIndex<query.length; svgIndex++) {
       if(query[svgIndex].getAttribute('viewBox')==='0 0 1281 199') {
