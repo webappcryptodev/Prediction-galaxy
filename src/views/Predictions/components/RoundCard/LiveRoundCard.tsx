@@ -42,8 +42,10 @@ const LiveRoundCard: React.FC<LiveRoundCardProps> = ({
 }) => {
   const { t } = useTranslation()
   const { lockPrice, totalAmount, lockTimestamp, closeTimestamp } = round
-  const price = useGetLastOraclePrice()
+  const price = useGetLastOraclePrice()  
   const priceAsNumber = parseFloat(formatBigNumberToFixed(price, 3, 8))
+
+  console.log('oracleprice', priceAsNumber);
 
   const bufferSeconds = useGetBufferSeconds()
 

@@ -23,6 +23,7 @@ const PreviousBetsTable: React.FC<PreviousBetsTableProps> = ({ numberOfBets = 5,
     const fetchBetHistory = async () => {
       setIsFetching(true)
       try {
+        alert(1)
         const response = await getBetHistory(
           {
             user: account.toLowerCase(),
