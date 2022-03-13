@@ -22,10 +22,8 @@ import { footerLinks } from './config/footerConfig'
 const Menu = (props) => {
   const { isDark, toggleTheme } = useTheme()
   const price = useGetLastOraclePrice()
-  const priceAsNumber = parseFloat(formatBigNumberToFixed(price, 3, 8))  
-  const cakePriceUsd = Number((priceAsNumber / 16.9702).toFixed(3));
   const ggPriceUsd = useGGBusdPrice();
-  const ggPriceUsdDisplay = ggPriceUsd ? Number(ggPriceUsd.toFixed(3)) : 23
+  const ggPriceUsdDisplay = ggPriceUsd ? Number(ggPriceUsd.toFixed(3)) : 0;
   // const draftCakePriceUsd = usePriceCakeBusd();
   // const cakePriceUsd = draftCakePriceUsd.toNumber() * 3.18;
   const { currentLanguage, setLanguage, t } = useTranslation()

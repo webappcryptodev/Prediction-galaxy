@@ -8,7 +8,7 @@ import { useGetCurrentRoundLockTimestamp, useGetLastOraclePrice } from 'state/pr
 import { useTranslation } from 'contexts/Localization'
 import { formatRoundTime } from '../helpers'
 import useCountdown from '../hooks/useCountdown'
-import { useCakeBusdPrice, useGGBusdPrice } from 'hooks/useBUSDPrice'
+import { useGGBusdPrice } from 'hooks/useBUSDPrice'
 
 const MyCustomTokenIcon = () => {
   return (
@@ -127,9 +127,8 @@ const Label = styled(Flex)<{ dir: 'left' | 'right' }>`
 export const PricePairLabel: React.FC = () => {
   const price = useGetLastOraclePrice()
   const priceAsNumber = parseFloat(formatBigNumberToFixed(price, 3, 8))
-  const cakePriceUsd = Number((priceAsNumber / 16.9702).toFixed(3));
   const ggPriceUsd = useGGBusdPrice();
-  const ggPriceAsNumber = Number(ggPriceUsd.toFixed(3))  
+  const ggPriceAsNumber =ggPriceUsd? Number(ggPriceUsd.toFixed(3)):0;
   const ggPriceUsdDisplay = ggPriceUsd ? `$${ggPriceUsd.toFixed(3)}` : '...'
   const { countUp, update } = useCountUp({
     start: 0,
