@@ -40,7 +40,7 @@ interface SetPositionCardProps {
   onSuccess: (hash: string) => Promise<void>
 }
 
-const dust = parseUnits('0.01', 18)
+const dust = parseUnits('0.1', 18)
 const percentShortcuts = [10, 25, 50, 75]
 
 const MyCustomTokenIcon = () => {
@@ -110,6 +110,7 @@ const SetPositionCard: React.FC<SetPositionCardProps> = ({ position, togglePosit
   const { swiper } = useSwiper()
   const { balance: bnbBalance } = useGetBnbBalance()
   const { balance: ggBalance, fetchStatus } = useGetGGBalance()
+  console.log('ggbalance',ggBalance);
   const minBetAmount = useGetMinBetAmount()
   const { t } = useTranslation()
   const { fetchWithCatchTxError, loading: isTxPending } = useCatchTxError()
@@ -119,7 +120,7 @@ const SetPositionCard: React.FC<SetPositionCardProps> = ({ position, togglePosit
   const maxBalance = useMemo(() => {
     return ggBalance.gt(dust) ? ggBalance.sub(dust) : dust
   }, [ggBalance])
-  const balanceDisplay = formatBigNumber(ggBalance)
+  const balanceDisplay = formatBigNumber(ggBalance,9,9)
 
   const valueAsBn = getValueAsEthersBn(value)
   const showFieldWarning = account && valueAsBn.gt(0) && errorMessage !== null

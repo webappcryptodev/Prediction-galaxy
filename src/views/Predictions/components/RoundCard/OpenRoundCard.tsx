@@ -137,7 +137,7 @@ const OpenRoundCard: React.FC<OpenRoundCardProps> = ({
                   width="100%"
                   onClick={() => handleSetPosition(BetPosition.BULL)}
                   mb="4px"
-                  disabled={!canEnterPosition || isBufferPhase}
+                  disabled={!canEnterPosition}
                 >
                   {t('Enter UP')}
                 </Button>
@@ -145,7 +145,7 @@ const OpenRoundCard: React.FC<OpenRoundCardProps> = ({
                   variant="danger"
                   width="100%"
                   onClick={() => handleSetPosition(BetPosition.BEAR)}
-                  disabled={!canEnterPosition || isBufferPhase}
+                  disabled={!canEnterPosition}
                 >
                   {t('Enter DOWN')}
                 </Button>
