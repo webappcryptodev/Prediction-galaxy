@@ -192,3 +192,10 @@ export function useCurrency(currencyId: string | undefined): Currency | null | u
   const token = useToken(isBNB ? undefined : currencyId)
   return isBNB ? ETHER : token
 }
+
+
+export function unuseCurrency(currencyId: string | undefined): Currency | null | undefined {
+  const isBNB = currencyId?.toUpperCase() === 'BNB'
+  const token = useToken(isBNB ? undefined : currencyId)
+  return isBNB ? ETHER : token
+}
