@@ -27,14 +27,14 @@ export default {
     56: '0xfa249Caa1D16f75fa159F7DFBAc0cC5EaB48CeFf',
     97: '0x707CBF373175fdB601D34eeBF2Cf665d08f01148',
   },
-  claimRefund: {
-    56: '0xE7e53A7e9E3Cf6b840f167eF69519175c497e149',
-    97: '',
-  },
-  pointCenterIfo: {
-    56: '0x3C6919b132462C1FEc572c6300E83191f4F0012a',
-    97: '0xd2Ac1B1728Bb1C11ae02AB6e75B76Ae41A2997e3',
-  },
+  // claimRefund: {
+  //   56: '0xE7e53A7e9E3Cf6b840f167eF69519175c497e149',
+  //   97: '',
+  // },
+  // pointCenterIfo: {
+  //   56: '0x3C6919b132462C1FEc572c6300E83191f4F0012a',
+  //   97: '0xd2Ac1B1728Bb1C11ae02AB6e75B76Ae41A2997e3',
+  // },
   bunnySpecial: {
     56: '0xFee8A195570a18461146F401d6033f5ab3380849',
     97: '0x7b7b1583De1DeB32Ce6605F6deEbF24A0671c17C',
